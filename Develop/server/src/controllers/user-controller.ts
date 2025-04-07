@@ -1,7 +1,10 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.js';
 
-// GET /Users
+/**
+ * GET /users
+ * Fetch all users (excluding their passwords).
+ */
 export const getAllUsers = async (_req: Request, res: Response) => {
   try {
     const users = await User.findAll({
@@ -13,7 +16,10 @@ export const getAllUsers = async (_req: Request, res: Response) => {
   }
 };
 
-// GET /Users/:id
+/**
+ * GET /users/:id
+ * Fetch a single user by their ID (excluding password).
+ */
 export const getUserById = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
@@ -30,7 +36,10 @@ export const getUserById = async (req: Request, res: Response) => {
   }
 };
 
-// POST /Users
+/**
+ * POST /users
+ * Create a new user with username and password.
+ */
 export const createUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
@@ -41,7 +50,10 @@ export const createUser = async (req: Request, res: Response) => {
   }
 };
 
-// PUT /Users/:id
+/**
+ * PUT /users/:id
+ * Update an existing user's username and/or password.
+ */
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   const { username, password } = req.body;
@@ -60,7 +72,10 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-// DELETE /Users/:id
+/**
+ * DELETE /users/:id
+ * Delete a user by their ID.
+ */
 export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {

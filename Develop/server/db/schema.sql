@@ -1,5 +1,5 @@
--- DROP DATABASE
-DROP DATABASE IF EXISTS kanban_db;
+-- DROP DATABASE if it already exists
+DROP DATABASE IF EXISTS book_club_db;
 
--- CREATE DATABASE
-CREATE DATABASE kanban_db;
+-- CREATE DATABASE for the Book Club
+CREATE DATABASE book_club_db;
