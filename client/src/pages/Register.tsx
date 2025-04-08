@@ -22,6 +22,7 @@ const Register = () => {
     try {
       const data = await register(formData);
       Auth.login(data.token);
+      navigate("/dashboard"); // Redirect to the dashboard or another route
     } catch (err) {
       console.error("Registration failed", err);
     }
