@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { User } from '../models/user.js';
+import { sendEmail } from '../utils/sendEmail.js'; // ✅ Import sendEmail function
 
 /**
  * GET /users
@@ -38,12 +39,20 @@ export const getUserById = async (req: Request, res: Response) => {
 
 /**
  * POST /users
- * Create a new user with username and password.
+ * Create a new user with username and password, then send a welcome email.
  */
 export const createUser = async (req: Request, res: Response) => {
   const { username, password } = req.body;
   try {
     const newUser = await User.create({ username, password });
+
+    // ✅ Send welcome email after user is created
+    await sendEmail(
+      'receiver@example.com', // Replace with newUser.email if you collect email addresses
+      'Welcome to Page Mates Book Club!',
+      `<p>Hi ${username}, welcome to the Page Mates Book Club! 📚✨</p>`
+    );
+
     res.status(201).json(newUser);
   } catch (error: any) {
     res.status(400).json({ message: error.message });
