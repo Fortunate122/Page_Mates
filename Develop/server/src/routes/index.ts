@@ -5,8 +5,16 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();
 
+/**
+ * Routes for authentication (login).
+ * - These do not need a token.
+ */
 router.use('/auth', authRoutes);
-// TODO: Add authentication to the API routes
-router.use('/api', apiRoutes);
+
+/**
+ * Routes for API (books, users).
+ * - These are protected and require a valid JWT token.
+ */
+router.use('/api', authenticateToken, apiRoutes);
 
 export default router;

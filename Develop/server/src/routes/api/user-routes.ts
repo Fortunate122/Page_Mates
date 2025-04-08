@@ -9,19 +9,34 @@ import {
 
 const router = express.Router();
 
-// GET /users - Get all users
+/**
+ * GET /users
+ * Get all users (excluding passwords).
+ */
 router.get('/', getAllUsers);
 
-// GET /users/:id - Get a user by id
+/**
+ * GET /users/:id
+ * Get a specific user by ID (excluding password).
+ */
 router.get('/:id', getUserById);
 
-// POST /users - Create a new user
+/**
+ * POST /users
+ * Create a new user with username and password.
+ */
 router.post('/', createUser);
 
-// PUT /users/:id - Update a user by id
+/**
+ * PUT /users/:id
+ * Update a user's username and/or password by ID.
+ */
 router.put('/:id', updateUser);
 
-// DELETE /users/:id - Delete a user by id
+/**
+ * DELETE /users/:id
+ * Delete a user by ID.
+ */
 router.delete('/:id', deleteUser);
 
 export { router as userRouter };

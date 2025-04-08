@@ -1,7 +1,12 @@
 import { seedUsers } from './user-seeds.js';
-import { seedTickets } from './ticket-seeds.js';
+import { seedBooks } from './book-seeds.js'; 
 import { sequelize } from '../models/index.js';
 
+/**
+ * Seed all data into the database.
+ * - First, sync database (drop and recreate tables).
+ * - Then, seed users and books.
+ */
 const seedAll = async (): Promise<void> => {
   try {
     await sequelize.sync({ force: true });
@@ -10,8 +15,8 @@ const seedAll = async (): Promise<void> => {
     await seedUsers();
     console.log('\n----- USERS SEEDED -----\n');
     
-    await seedTickets();
-    console.log('\n----- TICKETS SEEDED -----\n');
+    await seedBooks();
+    console.log('\n----- BOOKS SEEDED -----\n');
     
     process.exit(0);
   } catch (error) {
