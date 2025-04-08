@@ -1,17 +1,34 @@
-import { Outlet } from 'react-router-dom';
-
-import Navbar from './components/Navbar';
+import { Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import BookSearch from "./pages/BookSearch";
+import BookDetail from "./pages/BookDetail";
+import Navbar from "./components/Navbar";
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
-
   return (
-    <div className='container'>
+    <AuthProvider>
       <Navbar />
-      <main>
-        <Outlet />
-      </main>
-    </div>
-  )
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route path="/search" element={<BookSearch />} />
+        <Route path="/book/:id" element={<BookDetail />} />
+        <Route path="*" element={<Navigate to="/login" />} />
+      </Routes>
+    </AuthProvider>
+  );
 }
 
-export default App
+export default App;
