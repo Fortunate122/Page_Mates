@@ -9,6 +9,6 @@ const router = Router();
 router.use('/auth', authRoutes);
 
 // Protected API routes (books, users)
-router.use('/api', authenticateToken, apiRoutes);
+router.use(authenticateToken, apiRoutes);
 
 export default router;
