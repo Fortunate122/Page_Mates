@@ -1,9 +1,11 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
 
+// ✅ Updated to include email
 interface UserAttributes {
   id: number;
   username: string;
+  email: string;        // <-- Added email
   password: string;
 }
 
@@ -12,6 +14,7 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
+  public email!: string;        // <-- Added email
   public password!: string;
 
   public readonly createdAt!: Date;
@@ -35,6 +38,11 @@ export function UserFactory(sequelize: Sequelize): typeof User {
       username: {
         type: DataTypes.STRING,
         allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,         // <-- Added email field
+        allowNull: false,
+        unique: true,                   // <-- (optional) emails must be unique
       },
       password: {
         type: DataTypes.STRING,
