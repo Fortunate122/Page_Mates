@@ -1,6 +1,17 @@
 import { useState } from "react";
-import { useAuth } from "../context/AuthContext";
+import { useAuth } from "../context/useAuth";
 import BookCard from "../components/BookCard";
+
+interface GoogleBooksItem {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+  };
+}
 
 interface Book {
   id: string;
@@ -20,7 +31,7 @@ const BookSearch = () => {
       `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}`
     );
     const data = await res.json();
-    const books = data.items?.map((item: any) => ({
+    const books = data.items?.map((item: GoogleBooksItem) => ({
       id: item.id,
       title: item.volumeInfo.title,
       authors: item.volumeInfo.authors || [],
