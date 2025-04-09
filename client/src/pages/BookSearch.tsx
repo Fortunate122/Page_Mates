@@ -41,6 +41,16 @@ const BookSearch = () => {
   };
 
   const handleSave = async (book: Book) => {
+    const payload = {
+      title: book.title,
+      authors: book.authors.join(", "), // ✅ fix here
+      description: "No description available.",
+      thumbnail: book.thumbnail,
+      googleBookId: book.id,
+    };
+  
+    console.log("Saving payload:", payload);
+
     try {
       const response = await fetch("/api/books", {
         method: "POST",
@@ -48,13 +58,13 @@ const BookSearch = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(book),
+        body: JSON.stringify(payload),
       });
-
+  
       if (!response.ok) {
         throw new Error("Failed to save book");
       }
-
+  
       alert("Book saved!");
     } catch (err) {
       console.error("Error saving book:", err);

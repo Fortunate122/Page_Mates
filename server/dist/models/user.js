@@ -18,6 +18,11 @@ export function UserFactory(sequelize) {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        email: {
+            type: DataTypes.STRING, // <-- Added email field
+            allowNull: false,
+            unique: true, // <-- (optional) emails must be unique
+        },
         password: {
             type: DataTypes.STRING,
             allowNull: false,

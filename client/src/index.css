@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 /* === Reset & Base === */
 * {
   margin: 0;
@@ -14,38 +13,9 @@ body {
 }
 
 a {
-=======
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:ital,wght@0,100..900;1,100..900&display=swap');
-
-:root {
-  font-family: 'Inter Tight', system-ui, Avenir, Helvetica, Arial, sans-serif;
-  --black-bean: #250902;
-  --black-bean-2: #38040e;
-  --rosewood: #640d14;
-  --falu-red: #800e13;
-  --auburn: #ad2831;
-  color-scheme: dark;
-  color: #ffffff;
-  background-color: var(--black-bean);
-}
-
-body {
-  background: url('/Page Mates.png') no-repeat center center fixed;
-  background-size: cover;
-  margin: 0;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-/* Links */
-a {
-  font-weight: 500;
-  color: var(--falu-red);
->>>>>>> 447d8ddeda7b996472f8b595ed82972e171670b6
   text-decoration: none;
   color: inherit;
 }
-<<<<<<< HEAD
 
 /* === Layout Containers === */
 .container {
@@ -63,25 +33,12 @@ nav {
   background-color: #0e1116;
   padding: 1rem 2rem;
   display: flex;
-=======
-a:hover {
-  color: var(--auburn);
-}
-
-/* Navbar */
-nav {
-  background-color: var(--black-bean-2);
-  padding: 1rem 2rem;
-  display: flex;
-  justify-content: space-between;
->>>>>>> 447d8ddeda7b996472f8b595ed82972e171670b6
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #1e1e1e;
 }
 
 nav a {
-<<<<<<< HEAD
   margin-left: 1.5rem;
   font-weight: 500;
   color: #ffffff;
@@ -188,87 +145,4 @@ footer a {
   font-size: 0.9rem;
   margin: 0.5rem 0;
   display: block;
-=======
-  margin-left: 1rem;
-  color: #fff;
-}
-
-/* Main Content */
-.container {
-  width: 90%;
-  margin: auto;
-  padding-top: 2rem;
-}
-
-/* Form */
-.form {
-  width: 100%;
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background-color: var(--rosewood);
-  border-radius: 10px;
-  box-shadow: 0px 0px 10px var(--black-bean-2);
-}
-
-.form > h1, .form > label {
-  color: #ffffff;
-}
-
-.form > input, .form > button {
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.form input {
-  padding: 0.75rem;
-  border-radius: 5px;
-  border: none;
-}
-
-.form button {
-  background-color: var(--auburn);
-  color: white;
-  border: none;
-  padding: 0.75rem;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.form button:hover {
-  background-color: var(--falu-red);
-}
-
-/* Book Card */
-.book-card {
-  background-color: var(--black-bean-2);
-  border: 1px solid var(--auburn);
-  padding: 1rem;
-  margin: 1rem 0;
-  border-radius: 10px;
-  color: white;
-}
-
-.book-card img {
-  width: 100px;
-}
-
-/* Buttons */
-button {
-  font-family: inherit;
-  font-weight: 600;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  opacity: 0.8;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-  }
->>>>>>> 447d8ddeda7b996472f8b595ed82972e171670b6
 }
