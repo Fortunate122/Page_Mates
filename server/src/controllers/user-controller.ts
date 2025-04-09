@@ -39,16 +39,16 @@ export const getUserById = async (req: Request, res: Response) => {
 
 /**
  * POST /users
- * Create a new user with username and password, then send a welcome email.
+ * Create a new user with username, email, and password, then send a welcome email.
  */
 export const createUser = async (req: Request, res: Response) => {
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
-    const newUser = await User.create({ username, password });
+    const newUser = await User.create({ username, email, password }); // ✅ FIXED: added email
 
-    // ✅ Send welcome email after user is created
+    // ✅ Send welcome email
     await sendEmail(
-      'receiver@example.com', // Replace with newUser.email if you collect email addresses
+      email, // ✅ Send to user's real email
       'Welcome to Page Mates Book Club!',
       `<p>Hi ${username}, welcome to the Page Mates Book Club! 📚✨</p>`
     );
@@ -61,16 +61,17 @@ export const createUser = async (req: Request, res: Response) => {
 
 /**
  * PUT /users/:id
- * Update an existing user's username and/or password.
+ * Update an existing user's username, email, and/or password.
  */
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { username, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     const user = await User.findByPk(id);
     if (user) {
-      user.username = username;
-      user.password = password;
+      if (username) user.username = username;
+      if (email) user.email = email;           // ✅ Allow email update too
+      if (password) user.password = password;
       await user.save();
       res.json(user);
     } else {
