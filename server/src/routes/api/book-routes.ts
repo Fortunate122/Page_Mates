@@ -3,6 +3,7 @@ import {
   getAllBooks,
   getBookById,
   createBook,
+  deleteBookById,
   saveFavoriteBook,
   getFavoriteBooks,
   deleteFavoriteBook,
@@ -45,6 +46,8 @@ router.get('/favorites/:userId', getFavoriteBooks);
  * Remove a book from a user's favorites.
  */
 router.delete('/favorites', deleteFavoriteBook);
+
+router.delete('/books/:id', deleteBookById);
 
 export { router as bookRouter };
 

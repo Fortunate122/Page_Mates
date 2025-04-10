@@ -11,7 +11,7 @@ const Navbar = () => {
       <Link to="/home">Home</Link>
       {token ? (
         <>
-          <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard">Favorites</Link>
           <Link to="/search">Search</Link>
           {user?.username && <span style={{ margin: "0 1rem" }}>Welcome, {user.username}!</span>}
           <button onClick={logout} style={{ marginLeft: "1rem" }}>Logout</button>

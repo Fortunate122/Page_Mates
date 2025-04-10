@@ -26,7 +26,7 @@ const Home = () => {
     const fetchTrendingBooks = async () => {
       try {
         const res = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=trending&maxResults=8`
+          `https://www.googleapis.com/books/v1/volumes?q=trending&maxResults=10`
         );
         const data = await res.json();
         const parsed = data.items.map((item: GoogleBooksItem) => ({

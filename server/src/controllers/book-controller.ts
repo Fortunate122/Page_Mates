@@ -94,3 +94,23 @@ export const deleteFavoriteBook = async (req: Request, res: Response) => {
   }
 };
 
+/**
+ * DELETE /books/:id
+ * Deletes a book by its ID.
+ */
+export const deleteBookById = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const book = await Book.findByPk(id);
+    if (!book) {
+      return res.status(404).json({ message: 'Book not found' });
+    }
+
+    await book.destroy();
+    return res.status(200).json({ message: 'Book deleted successfully' });
+  } catch (error: any) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
