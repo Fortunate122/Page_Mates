@@ -1,14 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-/**
- * Define a custom JwtPayload interface extending jwt's default.
- */
+// Define a JwtPayload interface
 interface JwtPayload {
   username: string;
 }
 
-// Extend Express Request to include user field
+// Extend Express Request to include user
 declare global {
   namespace Express {
     interface Request {
@@ -18,8 +16,10 @@ declare global {
 }
 
 /**
- * Middleware to authenticate JWT.
- * Verifies token in Authorization header and attaches decoded user.
+ * Middleware to authenticate a user's JWT token.
+ * - Checks for the token in the Authorization header.
+ * - Verifies the token.
+ * - Attaches decoded user info to the request object.
  */
 export function authenticateToken(req: Request, res: Response, next: NextFunction) {
   const authHeader = req.headers.authorization;
@@ -30,10 +30,10 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-    req.user = decoded;
-    next();
-    return;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
+    (req as any).user = decoded;
+    return next(); // Explicitly return next()
+
   } catch (error) {
     return res.status(403).json({ message: 'Invalid token' });
   }
