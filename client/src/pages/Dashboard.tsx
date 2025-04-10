@@ -3,10 +3,12 @@ import { useAuth } from "../context/useAuth";
 import BookCard from "../components/BookCard";
 
 interface Book {
-  id: string;
+  id: number;
   title: string;
-  authors: string[];
+  authors: string;
+  description: string;
   thumbnail: string;
+  googleBookId: string;
 }
 
 const Dashboard = () => {
@@ -34,7 +36,7 @@ const Dashboard = () => {
     fetchFavorites();
   }, [token]);
 
-  const handleDelete = async (bookId: string) => {
+  const handleDelete = async (bookId: number) => {
     try {
       const response = await fetch(`/api/books/${bookId}`, {
         method: "DELETE",
@@ -58,7 +60,10 @@ const Dashboard = () => {
         {books.map((book) => (
           <BookCard
             key={book.id}
-            {...book}
+            id={book.id.toString()}
+            title={book.title}
+            authors={book.authors.split(",")}
+            thumbnail={book.thumbnail}
             actionLabel="Remove"
             onAction={() => handleDelete(book.id)}
           />
@@ -69,6 +74,7 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
 
 
 // import { useEffect, useState } from "react";
