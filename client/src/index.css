@@ -79,10 +79,9 @@ nav a {
 
 /* === Popular Books Section === */
 .book-grid {
-  display: flex;
+  display: grid;
   gap: 2rem;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 }
 
 .book-card {
@@ -101,9 +100,11 @@ nav a {
   width: 100%;
   object-fit: cover;
   margin-bottom: 1rem;
+  border-radius: 4px;
 }
 
-.book-card h3 {
+.book-card h3,
+.book-card h4 {
   margin: 0.5rem 0;
   font-size: 1.125rem;
   font-weight: 600;
@@ -122,6 +123,36 @@ nav a {
   color: white;
   border-radius: 6px;
   cursor: pointer;
+}
+
+/* === Homepage Banner Section === */
+.banner {
+  text-align: center;
+  padding: 4rem 1rem;
+  background: linear-gradient(to right, #0f172a, #1e293b);
+  color: #fff;
+  margin-bottom: 3rem;
+}
+
+.banner h1 {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.banner p {
+  font-size: 1.125rem;
+  color: #cbd5e1;
+}
+
+/* === Recommended Reads Section === */
+.recommended {
+  padding: 0 1rem;
+}
+
+.recommended h2 {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  color: #facc15;
 }
 
 /* === Footer === */
@@ -145,4 +176,82 @@ footer a {
   font-size: 0.9rem;
   margin: 0.5rem 0;
   display: block;
+}
+
+/* === Responsive Layouts === */
+
+/* Tablet: 768px and down */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  nav a {
+    margin: 0.5rem 0 0 0;
+  }
+
+  .book-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  }
+
+  .banner h1 {
+    font-size: 2rem;
+  }
+
+  .banner p {
+    font-size: 1rem;
+  }
+
+  .recommended h2 {
+    font-size: 1.5rem;
+  }
+
+  .book-card img {
+    height: 200px;
+  }
+
+  footer .footer-columns {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Mobile: 480px and down */
+@media (max-width: 480px) {
+  .hero h1,
+  .banner h1 {
+    font-size: 1.75rem;
+  }
+
+  .hero p,
+  .banner p {
+    font-size: 0.95rem;
+  }
+
+  .book-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .book-card {
+    max-width: 100%;
+    padding: 0.75rem;
+  }
+
+  .book-card img {
+    height: 180px;
+  }
+
+  .book-card h3,
+  .book-card h4 {
+    font-size: 1rem;
+  }
+
+  nav {
+    padding: 1rem;
+  }
+
+  footer {
+    padding: 2rem 1rem;
+  }
 }

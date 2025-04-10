@@ -39,8 +39,8 @@ const BookCard: React.FC<Book> = ({
   };
 
   return (
-    <div style={{ border: "1px solid #ccc", margin: 8, padding: 8 }}>
-      {thumbnail && <img src={thumbnail} alt={title} style={{ height: 100 }} />}
+    <div className="book-card">
+      {thumbnail && <img src={thumbnail} alt={title} />}
       <h4>{title}</h4>
       <p>{Array.isArray(authors) ? authors.join(", ") : authors}</p>
 
@@ -72,13 +72,20 @@ export default BookCard;
 // interface Book {
 //   id: string;
 //   title: string;
-//   authors: string[];
+//   authors: string[] | string;
 //   thumbnail: string;
 //   onAction?: () => void;
 //   actionLabel?: string;
 // }
 
-// const BookCard: React.FC<Book> = ({ id, title, authors, thumbnail, onAction, actionLabel }) => {
+// const BookCard: React.FC<Book> = ({
+//   id,
+//   title,
+//   authors,
+//   thumbnail,
+//   onAction,
+//   actionLabel,
+// }) => {
 //   const [email, setEmail] = useState("");
 //   const [showForm, setShowForm] = useState(false);
 
@@ -101,15 +108,15 @@ export default BookCard;
 //   };
 
 //   return (
-//     <div key={id} style={{ border: "1px solid #ccc", margin: 8, padding: 8 }}>
+//     <div style={{ border: "1px solid #ccc", margin: 8, padding: 8 }}>
 //       {thumbnail && <img src={thumbnail} alt={title} style={{ height: 100 }} />}
 //       <h4>{title}</h4>
-//       <p>{authors.join(", ")}</p>
+//       <p>{Array.isArray(authors) ? authors.join(", ") : authors}</p>
+
 //       {onAction && <button onClick={onAction}>{actionLabel || "Action"}</button>}
 
-//       <button onClick={() => setShowForm(!showForm)}>
-//         Recommend via Email
-//       </button>
+//       <button onClick={() => setShowForm(!showForm)}>Recommend via Email</button>
+
 //       {showForm && (
 //         <div>
 //           <input

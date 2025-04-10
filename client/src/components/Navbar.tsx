@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
     <nav>
-      <Link to="/">Home</Link>
+      <Link to="/home">Home</Link>
       {token ? (
         <>
           <Link to="/dashboard">Dashboard</Link>
