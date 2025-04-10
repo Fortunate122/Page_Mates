@@ -6,7 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import BookSearch from "./pages/BookSearch";
 import BookDetail from "./pages/BookDetail";
 import Navbar from "./components/Navbar";
-import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
