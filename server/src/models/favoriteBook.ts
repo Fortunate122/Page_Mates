@@ -1,5 +1,5 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { Book } from './book.js';
+import { Book } from './book.js'; // Regular import
 
 interface FavoriteBookAttributes {
   id: number;
@@ -9,10 +9,8 @@ interface FavoriteBookAttributes {
 
 interface FavoriteBookCreationAttributes extends Optional<FavoriteBookAttributes, 'id'> {}
 
-export class FavoriteBook extends Model<
-  FavoriteBookAttributes,
-  FavoriteBookCreationAttributes
-> implements FavoriteBookAttributes {
+export class FavoriteBook extends Model<FavoriteBookAttributes, FavoriteBookCreationAttributes>
+  implements FavoriteBookAttributes {
   public id!: number;
   public userId!: number;
   public bookId!: number;
@@ -20,25 +18,15 @@ export class FavoriteBook extends Model<
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  public Book?: Book; // for `include: [Book]` in queries
+  public Book?: Book; // Association with Book
 }
 
 export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
   FavoriteBook.init(
     {
-      id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
-        primaryKey: true,
-      },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      bookId: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
+      id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+      userId: { type: DataTypes.INTEGER, allowNull: false },
+      bookId: { type: DataTypes.INTEGER, allowNull: false },
     },
     {
       tableName: 'favorite_books',
@@ -48,10 +36,12 @@ export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
     }
   );
 
+  // Define association with Book
   FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
 
   return FavoriteBook;
 }
+
 
 
 
