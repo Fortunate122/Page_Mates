@@ -1,6 +1,6 @@
 import express from 'express';
-import { sendEmail } from '../utils/sendEmail';
-import { authenticateToken } from '../middleware/auth';
+import { sendEmail } from '../utils/sendEmail.js';
+import { authenticateToken } from '../middleware/auth.js';
 
 const router = express.Router();
 

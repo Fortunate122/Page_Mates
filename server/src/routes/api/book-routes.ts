@@ -7,7 +7,7 @@ import {
   saveFavoriteBook,
   getFavoriteBooks,
   deleteFavoriteBook,
-} from '../../controllers/book-controller';
+} from '../../controllers/book-controller.js';
 
 const router = express.Router();
 
