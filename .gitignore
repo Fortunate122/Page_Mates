@@ -13,6 +13,14 @@ server/node_modules
 
 build/
 
+/client/dist/
+/server/dist/
+
+
+/client/dist-ssr/
+/server/dist-ssr/
+
+
 *.local
 
 # Editor directories and files
