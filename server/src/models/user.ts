@@ -1,11 +1,10 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
 import bcrypt from 'bcrypt';
 
-// ✅ Updated to include email
 interface UserAttributes {
   id: number;
   username: string;
-  email: string;        // <-- Added email
+  email: string;
   password: string;
 }
 
@@ -14,13 +13,12 @@ interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 export class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
   public id!: number;
   public username!: string;
-  public email!: string;        // <-- Added email
+  public email!: string;
   public password!: string;
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  // Hash the password before saving the user
   public async setPassword(password: string) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(password, saltRounds);
@@ -40,9 +38,9 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         allowNull: false,
       },
       email: {
-        type: DataTypes.STRING,         // <-- Added email field
+        type: DataTypes.STRING,
         allowNull: false,
-        unique: true,                   // <-- (optional) emails must be unique
+        unique: true,
       },
       password: {
         type: DataTypes.STRING,
@@ -51,6 +49,11 @@ export function UserFactory(sequelize: Sequelize): typeof User {
     },
     {
       tableName: 'users',
+      modelName: 'User',
+      name: {
+        singular: 'user',
+        plural: 'users',
+      },
       sequelize,
       hooks: {
         beforeCreate: async (user: User) => {
@@ -59,7 +62,7 @@ export function UserFactory(sequelize: Sequelize): typeof User {
         beforeUpdate: async (user: User) => {
           await user.setPassword(user.password);
         },
-      }
+      },
     }
   );
 

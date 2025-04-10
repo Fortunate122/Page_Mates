@@ -24,19 +24,31 @@ export class FavoriteBook extends Model<FavoriteBookAttributes, FavoriteBookCrea
 export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
   FavoriteBook.init(
     {
-      id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-      userId: { type: DataTypes.INTEGER, allowNull: false },
-      bookId: { type: DataTypes.INTEGER, allowNull: false },
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
+      userId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      bookId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
     },
     {
       tableName: 'favorite_books',
       modelName: 'FavoriteBook',
-      name: { singular: 'favoriteBook', plural: 'favoriteBooks' },
+      name: {
+        singular: 'favoriteBook',
+        plural: 'favoriteBooks',
+      },
       sequelize,
     }
   );
 
-  // Define association with Book
   FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
 
   return FavoriteBook;
