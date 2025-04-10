@@ -11,43 +11,14 @@ import {
 
 const router = express.Router();
 
-/**
- * GET /books
- * Get all saved books from the database.
- */
-router.get('/', getAllBooks);
+router.get('/', getAllBooks); // GET /api/books
+router.get('/:id', getBookById); // GET /api/books/:id
+router.post('/', createBook); // POST /api/books
+router.delete('/:id', deleteBookById); // DELETE /api/books/:id
 
-/**
- * GET /books/:id
- * Get a specific book by ID from the database.
- */
-router.get('/:id', getBookById);
-
-/**
- * POST /books
- * Save a new book to the database.
- */
-router.post('/', createBook);
-
-/**
- * POST /favorites
- * Save a book as a user's favorite.
- */
-router.post('/favorites', saveFavoriteBook);
-
-/**
- * GET /favorites/:userId
- * Get all favorite books for a specific user.
- */
-router.get('/favorites/:userId', getFavoriteBooks);
-
-/**
- * DELETE /favorites
- * Remove a book from a user's favorites.
- */
-router.delete('/favorites', deleteFavoriteBook);
-
-router.delete('/books/:id', deleteBookById);
+// Favorites
+router.post('/favorites', saveFavoriteBook); // POST /api/books/favorites
+router.get('/favorites/:userId', getFavoriteBooks); // GET /api/books/favorites/:userId
+router.delete('/favorites', deleteFavoriteBook); // DELETE /api/books/favorites
 
 export { router as bookRouter };
-
