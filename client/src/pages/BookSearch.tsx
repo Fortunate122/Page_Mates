@@ -43,7 +43,7 @@ const BookSearch = () => {
   const handleSave = async (book: Book) => {
     const payload = {
       title: book.title,
-      authors: book.authors.join(", "), // ✅ fix here
+      authors: book.authors.join(", "),
       description: "No description available.",
       thumbnail: book.thumbnail,
       googleBookId: book.id,

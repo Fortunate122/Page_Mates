@@ -3,6 +3,7 @@ const forceDatabaseRefresh = false; // Set true to DROP and recreate tables ever
 import dotenv from 'dotenv';
 dotenv.config();
 
+import cors from 'cors';
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -14,6 +15,15 @@ const PORT = process.env.PORT || 3001;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Enable CORS
+app.use(
+  cors({
+    origin: "https://page-mates.onrender.com", // Your actual frontend URL
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    allowedHeaders: "Content-Type,Authorization",
+  })
+);
 
 // Middleware to parse incoming JSON data
 app.use(express.json());
