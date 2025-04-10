@@ -1,6 +1,6 @@
 import { JwtPayload, jwtDecode } from 'jwt-decode';
 
-const TOKEN_KEY = 'token';
+const TOKEN_KEY = "id_token";
 
 class AuthService {
   getProfile() {
@@ -27,13 +27,21 @@ class AuthService {
     return localStorage.getItem(TOKEN_KEY);
   }
 
+  setToken(token: string): void {
+    localStorage.setItem(TOKEN_KEY, token);
+  }
+
+  clearToken(): void {
+    localStorage.removeItem(TOKEN_KEY); // ✅ fixes the error
+  }
+
   login(idToken: string) {
-    localStorage.setItem(TOKEN_KEY, idToken);
-    window.location.assign('/dashboard'); // redirect to dashboard
+    this.setToken(idToken);
+    window.location.assign('/dashboard');
   }
 
   logout() {
-    localStorage.removeItem(TOKEN_KEY);
+    this.clearToken(); // ✅ use the new method
     window.location.assign('/login');
   }
 }

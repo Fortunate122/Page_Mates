@@ -50,6 +50,7 @@ const BookSearch = () => {
     };
   
     console.log("Saving payload:", payload);
+    console.log("JWT token:", token);
 
     try {
       const response = await fetch("/api/books", {
