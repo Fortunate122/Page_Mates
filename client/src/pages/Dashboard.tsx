@@ -14,6 +14,7 @@ interface Book {
 const Dashboard = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const { token } = useAuth();
+  console.log("JWT Token:", token);
 
   useEffect(() => {
     const fetchFavorites = async () => {
