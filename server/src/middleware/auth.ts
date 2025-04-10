@@ -1,10 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
+/**
+ * JWT payload structure expected from tokens
+ */
 interface JwtPayload {
+  id: number;
   username: string;
 }
 
+/**
+ * Safely extend Express.Request to include `user` from JWT
+ */
 declare global {
   namespace Express {
     interface Request {
@@ -13,26 +20,27 @@ declare global {
   }
 }
 
-export function authenticateToken(req: Request, res: Response, next: NextFunction) {
+/**
+ * Middleware to authenticate and attach user from JWT
+ */
+export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
   const token = authHeader?.split(' ')[1];
 
-  console.log("Authorization header:", authHeader); // DEBUG
-  console.log("Token extracted:", token);  
-
   if (!token) {
-    return res.status(401).json({ message: 'Access token missing' });
+    res.status(401).json({ message: 'Access token missing' });
+    return;
   }
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
     req.user = decoded;
     next();
-    return;
   } catch (error) {
-    return res.status(403).json({ message: 'Invalid token' });
+    res.status(403).json({ message: 'Invalid token' });
   }
 }
+
 
 // export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
 //   const authHeader = req.headers['authorization'];

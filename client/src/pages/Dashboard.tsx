@@ -16,6 +16,8 @@ const Dashboard = () => {
   const { token } = useAuth();
 
   useEffect(() => {
+    if (!token) return;
+
     const fetchFavorites = async () => {
       try {
         const response = await fetch("/api/books", {

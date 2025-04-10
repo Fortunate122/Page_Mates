@@ -5,10 +5,10 @@ import { authenticateToken } from '../middleware/auth.js';
 
 const router = Router();
 
-// ✅ Public routes: no token required
+// Public auth routes (login/register)
 router.use('/auth', authRoutes);
 
-// ✅ Protected API routes: token required
+// Protected API routes (books)
 router.use('/api', authenticateToken, apiRoutes);
 
 export default router;

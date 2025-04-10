@@ -7,18 +7,18 @@ import {
   saveFavoriteBook,
   getFavoriteBooks,
   deleteFavoriteBook,
-} from '../../controllers/book-controller.js';
+} from '../../controllers/book-controller';
 
 const router = express.Router();
 
-router.get('/', getAllBooks); // GET /api/books
-router.get('/:id', getBookById); // GET /api/books/:id
-router.post('/', createBook); // POST /api/books
-router.delete('/:id', deleteBookById); // DELETE /api/books/:id
+router.get('/', getAllBooks);
+router.get('/:id', getBookById);
+router.post('/', createBook);
+router.delete('/:id', deleteBookById);
 
 // Favorites
-router.post('/favorites', saveFavoriteBook); // POST /api/books/favorites
-router.get('/favorites/:userId', getFavoriteBooks); // GET /api/books/favorites/:userId
-router.delete('/favorites', deleteFavoriteBook); // DELETE /api/books/favorites
+router.post('/favorites', saveFavoriteBook);
+router.get('/favorites', getFavoriteBooks);
+router.delete('/favorites/:id', deleteFavoriteBook);
 
-export { router as bookRouter };
+export default router;

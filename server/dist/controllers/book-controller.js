@@ -13,12 +13,7 @@ export const getBookById = async (req, res) => {
     const { id } = req.params;
     try {
         const book = await Book.findByPk(id);
-        if (book) {
-            res.json(book);
-        }
-        else {
-            res.status(404).json({ message: 'Book not found' });
-        }
+        book ? res.json(book) : res.status(404).json({ message: 'Book not found' });
     }
     catch (error) {
         res.status(500).json({ message: error.message });
@@ -26,45 +21,45 @@ export const getBookById = async (req, res) => {
 };
 export const createBook = async (req, res) => {
     const { title, authors, description, thumbnail, googleBookId } = req.body;
+    const userId = req.user?.id;
     try {
-        const newBook = await Book.create({ title, authors, description, thumbnail, googleBookId });
-        res.status(201).json(newBook);
-    }
-    catch (error) {
-        res.status(400).json({ message: error.message });
-    }
-};
-export const saveFavoriteBook = async (req, res) => {
-    const { userId, bookId } = req.body;
-    try {
-        const favorite = await FavoriteBook.create({ userId, bookId });
-        res.status(201).json(favorite);
+        let book = await Book.findOne({ where: { googleBookId } });
+        if (!book) {
+            book = await Book.create({ title, authors, description, thumbnail, googleBookId });
+        }
+        const favorite = await FavoriteBook.create({ userId, bookId: book.id });
+        res.status(201).json({ book, favorite });
     }
     catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 export const getFavoriteBooks = async (req, res) => {
-    const { userId } = req.params;
+    const userId = req.user?.id;
     try {
-        const favorites = await FavoriteBook.findAll({ where: { userId } });
-        res.json(favorites);
+        const favorites = await FavoriteBook.findAll({
+            where: { userId },
+            include: [{ model: Book }],
+        });
+        const books = favorites.map(f => f.Book);
+        res.json(books);
     }
     catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
-export const deleteFavoriteBook = async (req, res) => {
-    const { userId, bookId } = req.body;
+export const deleteBookById = async (req, res) => {
+    const bookId = parseInt(req.params.id);
+    const userId = req.user?.id;
     try {
         const favorite = await FavoriteBook.findOne({ where: { userId, bookId } });
-        if (favorite) {
-            await favorite.destroy();
-            res.json({ message: 'Favorite removed' });
-        }
-        else {
+        if (!favorite) {
             res.status(404).json({ message: 'Favorite not found' });
+            return;
         }
+        res.status(200).json({ message: 'Book removed from favorites' });
+        return;
+        res.status(200).json({ message: 'Book removed from favorites' });
     }
     catch (error) {
         res.status(500).json({ message: error.message });

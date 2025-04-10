@@ -1,10 +1,11 @@
 import express from 'express';
-import { getAllBooks, getBookById, createBook, saveFavoriteBook, getFavoriteBooks, deleteFavoriteBook, } from '../../controllers/book-controller.js';
+import { getAllBooks, getBookById, createBook, deleteBookById, saveFavoriteBook, getFavoriteBooks, deleteFavoriteBook, } from '../../controllers/book-controller.js';
 const router = express.Router();
 router.get('/', getAllBooks);
 router.get('/:id', getBookById);
 router.post('/', createBook);
+router.delete('/:id', deleteBookById);
 router.post('/favorites', saveFavoriteBook);
-router.get('/favorites/:userId', getFavoriteBooks);
+router.get('/favorites', getFavoriteBooks);
 router.delete('/favorites', deleteFavoriteBook);
 export { router as bookRouter };

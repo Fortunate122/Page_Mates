@@ -6,7 +6,7 @@ import { BookFactory } from './book.js';
 import { FavoriteBookFactory } from './favoriteBook.js';
 const sequelize = process.env.DATABASE_URL
     ? new Sequelize(process.env.DATABASE_URL)
-    : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD, {
+    : new Sequelize(process.env.DB_NAME || '', process.env.DB_USER || '', process.env.DB_PASSWORD || '', {
         host: 'localhost',
         dialect: 'postgres',
         dialectOptions: {
@@ -14,8 +14,10 @@ const sequelize = process.env.DATABASE_URL
         },
     });
 const User = UserFactory(sequelize);
-const Book = BookFactory(sequelize);
-const FavoriteBook = FavoriteBookFactory(sequelize);
-User.belongsToMany(Book, { through: FavoriteBook, foreignKey: 'userId' });
-Book.belongsToMany(User, { through: FavoriteBook, foreignKey: 'bookId' });
-export { sequelize, User, Book, FavoriteBook };
+const BookModel = BookFactory(sequelize);
+const FavoriteBookModel = FavoriteBookFactory(sequelize);
+User.belongsToMany(BookModel, { through: FavoriteBookModel, foreignKey: 'userId' });
+BookModel.belongsToMany(User, { through: FavoriteBookModel, foreignKey: 'bookId' });
+BookModel.hasMany(FavoriteBookModel, { foreignKey: 'bookId' });
+FavoriteBookModel.belongsTo(BookModel, { foreignKey: 'bookId' });
+export { sequelize, User, BookModel as Book, FavoriteBookModel as FavoriteBook };

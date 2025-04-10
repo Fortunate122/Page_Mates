@@ -1,38 +1,19 @@
 import { DataTypes, Model } from 'sequelize';
+import { FavoriteBook } from './favoriteBook.js';
 export class Book extends Model {
 }
 export function BookFactory(sequelize) {
     Book.init({
-        id: {
-            type: DataTypes.INTEGER,
-            autoIncrement: true,
-            primaryKey: true,
-        },
-        title: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        authors: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        description: {
-            type: DataTypes.TEXT,
-            allowNull: true,
-        },
-        thumbnail: {
-            type: DataTypes.STRING,
-            allowNull: true,
-        },
-        googleBookId: {
-            type: DataTypes.STRING,
-            allowNull: false,
-            unique: true,
-        },
+        id: { type: DataTypes.INTEGER, autoIncrement: true, primaryKey: true },
+        title: DataTypes.STRING,
+        authors: DataTypes.STRING,
+        description: DataTypes.TEXT,
+        thumbnail: DataTypes.STRING,
+        googleBookId: DataTypes.STRING,
     }, {
         tableName: 'books',
         sequelize,
-        timestamps: true,
     });
+    Book.hasMany(FavoriteBook, { foreignKey: 'bookId' });
     return Book;
 }

@@ -1,10 +1,11 @@
-// Whenever you use authenticateToken and access req.user.
-// this file It extends the built-in Express Request type to tell TypeScript that req.user exists and is safe to use.
+import { JwtPayload } from 'jsonwebtoken';
 
-declare namespace Express {
+declare global {
+  namespace Express {
     interface Request {
-      user?: {
-        username: string;
-      };
+      user?: JwtPayload & { username: string; id?: number };
     }
   }
+}
+
+export {};

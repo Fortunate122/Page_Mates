@@ -9,7 +9,8 @@ router.post('/', authenticateToken, async (req, res) => {
   const { to, book } = req.body;
 
   if (!to || !book || !book.title) {
-    return res.status(400).json({ message: 'Missing required email or book data.' });
+    res.status(400).json({ message: 'Missing required email or book data.' });
+    return; // Explicitly return void
   }
 
   const html = `
@@ -23,9 +24,9 @@ router.post('/', authenticateToken, async (req, res) => {
 
   try {
     const result = await sendEmail(to, `Book Recommendation: ${book.title}`, html);
-    return res.json({ message: 'Email sent successfully.', result });
+    res.json({ message: 'Email sent successfully.', result });
   } catch (err) {
-    return res.status(500).json({ message: 'Failed to send email.', error: err });
+    res.status(500).json({ message: 'Failed to send email.', error: err });
   }
 });
 
