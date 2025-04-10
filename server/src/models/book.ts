@@ -22,6 +22,8 @@ export class Book extends Model<BookAttributes, BookCreationAttributes> implemen
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
+
+  public FavoriteBooks?: FavoriteBook[]; // for eager loading
 }
 
 export function BookFactory(sequelize: Sequelize): typeof Book {
@@ -37,10 +39,14 @@ export function BookFactory(sequelize: Sequelize): typeof Book {
     {
       tableName: 'books',
       sequelize,
+      modelName: 'Book',
+      name: {
+        singular: 'book',
+        plural: 'books',
+      },
     }
   );
 
-  // ✅ Association
   Book.hasMany(FavoriteBook, { foreignKey: 'bookId' });
 
   return Book;
