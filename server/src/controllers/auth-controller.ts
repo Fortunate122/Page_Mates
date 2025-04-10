@@ -27,7 +27,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: error.message });
   }
 };
-
+ 
 // User login
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
@@ -53,6 +53,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     res.json({ token });
   } catch (error: any) {
+    console.error("❌ Registration error:", error);
     res.status(500).json({ message: error.message });
   }
 };

@@ -6,5 +6,5 @@ const router = Router();
 // Public auth routes (login, register)
 router.use('/auth', authRoutes);
 // Protected API routes (books, users)
-router.use('/api', authenticateToken, apiRoutes);
+router.use(authenticateToken, apiRoutes);
 export default router;

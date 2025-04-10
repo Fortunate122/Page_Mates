@@ -19,7 +19,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.json());
 
 // Use defined routes
-app.use('/api', routes);
+app.use(routes);
 
 // Serve static files from client/dist
 app.use(express.static(path.resolve(__dirname, '../../client/dist')));
