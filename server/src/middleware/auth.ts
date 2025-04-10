@@ -33,6 +33,7 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string);
     (req as any).user = decoded;
     return next(); // Explicitly return next()
+
   } catch (error) {
     return res.status(403).json({ message: 'Invalid token' });
   }
