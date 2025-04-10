@@ -3,7 +3,7 @@ import React, { useState } from "react";
 interface Book {
   id: string;
   title: string;
-  authors: string[] | string;
+  authors: string[];
   thumbnail: string;
   onAction?: () => void;
   actionLabel?: string;
