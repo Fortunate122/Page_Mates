@@ -1,11 +1,6 @@
 import { seedUsers } from './user-seeds.js';
 import { seedBooks } from './book-seeds.js';
 import { sequelize } from '../models/index.js';
-/**
- * Seed all data into the database.
- * - First, sync database (drop and recreate tables).
- * - Then, seed users and books.
- */
 const seedAll = async () => {
     try {
         await sequelize.sync({ force: true });

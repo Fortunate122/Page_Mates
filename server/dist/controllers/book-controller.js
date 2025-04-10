@@ -1,9 +1,5 @@
 import { Book } from '../models/book.js';
 import { FavoriteBook } from '../models/favoriteBook.js';
-/**
- * GET /books
- * Fetch all saved books from the database.
- */
 export const getAllBooks = async (_req, res) => {
     try {
         const books = await Book.findAll();
@@ -13,10 +9,6 @@ export const getAllBooks = async (_req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-/**
- * GET /books/:id
- * Fetch a single book by its ID from the database.
- */
 export const getBookById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -32,10 +24,6 @@ export const getBookById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-/**
- * POST /books
- * Save a new book to the database.
- */
 export const createBook = async (req, res) => {
     const { title, authors, description, thumbnail, googleBookId } = req.body;
     try {
@@ -46,10 +34,6 @@ export const createBook = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-/**
- * POST /favorites
- * Save a book as a user's favorite.
- */
 export const saveFavoriteBook = async (req, res) => {
     const { userId, bookId } = req.body;
     try {
@@ -60,10 +44,6 @@ export const saveFavoriteBook = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-/**
- * GET /favorites/:userId
- * Fetch all favorite books for a specific user.
- */
 export const getFavoriteBooks = async (req, res) => {
     const { userId } = req.params;
     try {
@@ -74,10 +54,6 @@ export const getFavoriteBooks = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-/**
- * DELETE /favorites
- * Remove a book from a user's favorites.
- */
 export const deleteFavoriteBook = async (req, res) => {
     const { userId, bookId } = req.body;
     try {

@@ -1,12 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
-/**
- * Book model definition extending Sequelize Model.
- */
 export class Book extends Model {
 }
-/**
- * BookFactory function initializes the Book model with Sequelize.
- */
 export function BookFactory(sequelize) {
     Book.init({
         id: {
@@ -36,9 +30,9 @@ export function BookFactory(sequelize) {
             unique: true,
         },
     }, {
-        tableName: 'books', // Table name in database
+        tableName: 'books',
         sequelize,
-        timestamps: true, // Sequelize will automatically handle createdAt and updatedAt
+        timestamps: true,
     });
     return Book;
 }

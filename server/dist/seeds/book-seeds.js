@@ -1,7 +1,4 @@
 import { Book } from '../models/book.js';
-/**
- * Seed initial books into the database.
- */
 export const seedBooks = async () => {
     await Book.bulkCreate([
         {

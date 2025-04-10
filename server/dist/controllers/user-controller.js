@@ -1,9 +1,5 @@
 import { User } from '../models/user.js';
-import { sendEmail } from '../utils/sendEmail.js'; // ✅ Import sendEmail function
-/**
- * GET /users
- * Fetch all users (excluding their passwords).
- */
+import { sendEmail } from '../utils/sendEmail.js';
 export const getAllUsers = async (_req, res) => {
     try {
         const users = await User.findAll({
@@ -15,10 +11,6 @@ export const getAllUsers = async (_req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-/**
- * GET /users/:id
- * Fetch a single user by their ID (excluding password).
- */
 export const getUserById = async (req, res) => {
     const { id } = req.params;
     try {
@@ -36,27 +28,17 @@ export const getUserById = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
-/**
- * POST /users
- * Create a new user with username, email, and password, then send a welcome email.
- */
 export const createUser = async (req, res) => {
     const { username, email, password } = req.body;
     try {
-        const newUser = await User.create({ username, email, password }); // ✅ FIXED: added email
-        // ✅ Send welcome email
-        await sendEmail(email, // ✅ Send to user's real email
-        'Welcome to Page Mates Book Club!', `<p>Hi ${username}, welcome to the Page Mates Book Club! 📚✨</p>`);
+        const newUser = await User.create({ username, email, password });
+        await sendEmail(email, 'Welcome to Page Mates Book Club!', `<p>Hi ${username}, welcome to the Page Mates Book Club! 📚✨</p>`);
         res.status(201).json(newUser);
     }
     catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
-/**
- * PUT /users/:id
- * Update an existing user's username, email, and/or password.
- */
 export const updateUser = async (req, res) => {
     const { id } = req.params;
     const { username, email, password } = req.body;
@@ -66,7 +48,7 @@ export const updateUser = async (req, res) => {
             if (username)
                 user.username = username;
             if (email)
-                user.email = email; // ✅ Allow email update too
+                user.email = email;
             if (password)
                 user.password = password;
             await user.save();
@@ -80,10 +62,6 @@ export const updateUser = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
-/**
- * DELETE /users/:id
- * Delete a user by their ID.
- */
 export const deleteUser = async (req, res) => {
     const { id } = req.params;
     try {

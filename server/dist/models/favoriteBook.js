@@ -1,7 +1,4 @@
 import { DataTypes, Model } from 'sequelize';
-/**
- * FavoriteBook model links Users and Books for saved favorites.
- */
 export class FavoriteBook extends Model {
 }
 export function FavoriteBookFactory(sequelize) {
@@ -17,9 +14,9 @@ export function FavoriteBookFactory(sequelize) {
             primaryKey: true,
         },
     }, {
-        tableName: 'favorite_books', // Table name in database
+        tableName: 'favorite_books',
         sequelize,
-        timestamps: false, // No createdAt/updatedAt needed
+        timestamps: false,
     });
     return FavoriteBook;
 }

@@ -1,7 +1,6 @@
 import { DataTypes, Model } from 'sequelize';
 import bcrypt from 'bcrypt';
 export class User extends Model {
-    // Hash the password before saving the user
     async setPassword(password) {
         const saltRounds = 10;
         this.password = await bcrypt.hash(password, saltRounds);
@@ -19,9 +18,9 @@ export function UserFactory(sequelize) {
             allowNull: false,
         },
         email: {
-            type: DataTypes.STRING, // <-- Added email field
+            type: DataTypes.STRING,
             allowNull: false,
-            unique: true, // <-- (optional) emails must be unique
+            unique: true,
         },
         password: {
             type: DataTypes.STRING,

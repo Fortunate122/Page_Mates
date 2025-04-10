@@ -2,7 +2,6 @@ import express from 'express';
 import { sendEmail } from '../utils/sendEmail';
 import { authenticateToken } from '../middleware/auth';
 const router = express.Router();
-// Protect this route with JWT auth
 router.post('/', authenticateToken, async (req, res) => {
     const { to, book } = req.body;
     if (!to || !book || !book.title) {
