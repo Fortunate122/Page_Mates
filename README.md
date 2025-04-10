@@ -45,10 +45,15 @@ If you have any questions, please reach out:
 - Email: davidsaldana122@gmail.com
 
 ## RenderLink
-https://your-render-link-here.com/
+[Render Live Link](https://page-mates.onrender.com)
 
 ## GitHubRepo
-https://github.com/Fortunate122/Page_Mates
+[GitHubRepo Link](https://github.com/Fortunate122/Page_Mates)
+
+## PresentationLink
+[Presentation Link](https://docs.google.com/presentation/d/1XEYir8-D74j5kss5jj547x-nfcdHZxF9_oO8iwzoLIw/edit?usp=sharing)
 
 ## ScreenShot
-![alt text](IMG_0711.jpg)
+![Login-page Viwe](./Images/Login.png)
+![Search-page Viwe](./Images/SearchBook.png)
+![Favorite-page Viwe](./Images/FavoritBook.png)
