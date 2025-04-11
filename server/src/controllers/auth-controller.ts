@@ -3,7 +3,6 @@ import { User } from '../models/user.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-// Register new user
 export const register = async (req: Request, res: Response): Promise<void> => {
   const { username, email, password } = req.body;
 
@@ -18,7 +17,7 @@ export const register = async (req: Request, res: Response): Promise<void> => {
     const newUser = await User.create({ username, email, password: hashedPassword });
 
     const token = jwt.sign(
-      { id: newUser.id, username: newUser.username }, // ✅ include `id`
+      { id: newUser.id, username: newUser.username }, // ✅ MUST include `id`
       process.env.JWT_SECRET as string,
       { expiresIn: '1h' }
     );
@@ -29,11 +28,8 @@ export const register = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-// Login existing user
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
-
-  console.log('Login attempt for username:', username); // 👈 log username
 
   try {
     const user = await User.findOne({ where: { username } });
@@ -44,14 +40,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username }, // ✅ include `id`
+      { id: user.id, username: user.username }, // ✅ MUST include `id`
       process.env.JWT_SECRET as string,
       { expiresIn: '1h' }
     );
 
     res.json({ token });
   } catch (error: any) {
-    console.error("❌ Login error:", error);
     res.status(500).json({ message: error.message });
   }
 };

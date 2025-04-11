@@ -23,10 +23,10 @@ const Home = () => {
   const [books, setBooks] = useState<Book[]>([]);
 
   useEffect(() => {
-    const fetchTrendingBooks = async () => {
+    const fetchPopularBooks = async () => {
       try {
         const res = await fetch(
-          `https://www.googleapis.com/books/v1/volumes?q=trending&maxResults=10`
+          `https://www.googleapis.com/books/v1/volumes?q=popular+books&orderBy=relevance&maxResults=10`
         );
         const data = await res.json();
         const parsed = data.items.map((item: GoogleBooksItem) => ({
@@ -37,22 +37,22 @@ const Home = () => {
         }));
         setBooks(parsed);
       } catch (err) {
-        console.error("Error fetching trending books", err);
+        console.error("Error fetching popular books", err);
       }
     };
 
-    fetchTrendingBooks();
+    fetchPopularBooks();
   }, []);
 
   return (
     <div className="container">
       <div className="banner">
         <h1>Welcome to Page Mates</h1>
-        <p>Discover trending books and share your favorites</p>
+        <p>Discover popular books and share your favorites</p>
       </div>
 
       <section className="recommended">
-        <h2>🔥 Recommended Reads</h2>
+        <h2>📚 Popular Picks</h2>
         <div className="book-grid">
           {books.map((book) => (
             <BookCard key={book.id} {...book} actionLabel="Details" />
