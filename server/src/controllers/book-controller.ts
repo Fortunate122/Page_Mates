@@ -2,25 +2,19 @@ import { RequestHandler } from 'express';
 import { Book } from '../models/book.js';
 import { FavoriteBook } from '../models/favoriteBook.js';
 
-/**
- * Get all books
- */
 export const getAllBooks: RequestHandler = async (_req, res) => {
   try {
-    const books = await Book.findAll();
+    const books = await Book.findAll({ include: FavoriteBook });
     res.json(books);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
   }
 };
 
-/**
- * Get a book by ID
- */
 export const getBookById: RequestHandler = async (req, res) => {
   const { id } = req.params;
   try {
-    const book = await Book.findByPk(id);
+    const book = await Book.findByPk(id, { include: FavoriteBook });
     if (book) {
       res.json(book);
     } else {
@@ -31,9 +25,6 @@ export const getBookById: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * Create a new book and associate it with the current user
- */
 export const createBook: RequestHandler = async (req, res) => {
   const { title, authors, description, thumbnail, googleBookId } = req.body;
   const userId = (req.user as any)?.id;
@@ -51,9 +42,6 @@ export const createBook: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * Delete a book by ID from the user's favorites
- */
 export const deleteBookById: RequestHandler = async (req, res) => {
   const { bookId } = req.body; // ✅ Get bookId from body
   const userId = (req.user as any)?.id;
@@ -71,9 +59,6 @@ export const deleteBookById: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * Save a book to the user's favorites
- */
 export const saveFavoriteBook: RequestHandler = async (req, res) => {
   const { userId, bookId } = req.body;
 
@@ -85,9 +70,6 @@ export const saveFavoriteBook: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * Get all favorite books for the authenticated user
- */
 export const getFavoriteBooks: RequestHandler = async (req, res) => {
   const userId = (req.user as any)?.id;
 
@@ -103,9 +85,6 @@ export const getFavoriteBooks: RequestHandler = async (req, res) => {
   }
 };
 
-/**
- * Delete a favorite book for the authenticated user
- */
 export const deleteFavoriteBook: RequestHandler = async (req, res) => {
   const { userId, bookId } = req.body;
 
@@ -121,6 +100,7 @@ export const deleteFavoriteBook: RequestHandler = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 
 // import { Request, Response } from 'express';

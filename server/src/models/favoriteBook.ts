@@ -1,5 +1,6 @@
+// server/src/models/favoriteBook.ts
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { Book } from './book.js';
+import type { Book } from './book.js'; // 👈 safe type-only import to avoid circular dependency
 
 interface FavoriteBookAttributes {
   id: number;
@@ -20,7 +21,7 @@ export class FavoriteBook extends Model<
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  public Book?: Book; // for `include: [Book]` in queries
+  public Book?: Book; // for eager loading
 }
 
 export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
@@ -42,13 +43,14 @@ export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
     },
     {
       tableName: 'favorite_books',
-      modelName: 'FavoriteBook',
-      name: { singular: 'favoriteBook', plural: 'favoriteBooks' },
       sequelize,
+      modelName: 'FavoriteBook',
+      name: {
+        singular: 'favoriteBook',
+        plural: 'favoriteBooks',
+      },
     }
   );
-
-  FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
 
   return FavoriteBook;
 }

@@ -6,9 +6,8 @@ import { UserFactory } from './user.js';
 import { BookFactory } from './book.js';
 import { FavoriteBookFactory } from './favoriteBook.js';
 
-// ✅ Setup Sequelize connection
 const sequelize = process.env.DATABASE_URL
-  ? new Sequelize(process.env.DATABASE_URL)
+  ? new Sequelize(process.env.DATABASE_URL, { dialect: 'postgres' })
   : new Sequelize(
       process.env.DB_NAME || '',
       process.env.DB_USER || '',
@@ -16,34 +15,36 @@ const sequelize = process.env.DATABASE_URL
       {
         host: 'localhost',
         dialect: 'postgres',
-        dialectOptions: {
-          decimalNumbers: true,
-        },
+        dialectOptions: { decimalNumbers: true },
       }
     );
 
-// ✅ Initialize models
 const User = UserFactory(sequelize);
-const BookModel = BookFactory(sequelize);
-const FavoriteBookModel = FavoriteBookFactory(sequelize);
+const Book = BookFactory(sequelize);
+const FavoriteBook = FavoriteBookFactory(sequelize);
 
-// ✅ Define associations
+// Centralized association logic
+function setupAssociations() {
+  User.belongsToMany(Book, {
+    through: FavoriteBook,
+    foreignKey: 'userId',
+    otherKey: 'bookId',
+  });
+  Book.belongsToMany(User, {
+    through: FavoriteBook,
+    foreignKey: 'bookId',
+    otherKey: 'userId',
+  });
 
-// Many-to-Many (Users <-> Books via FavoriteBook)
-User.belongsToMany(BookModel, { through: FavoriteBookModel, foreignKey: 'userId' });
-BookModel.belongsToMany(User, { through: FavoriteBookModel, foreignKey: 'bookId' });
+  Book.hasMany(FavoriteBook, { foreignKey: 'bookId', as: 'favorites' });
+  FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
+}
 
-// ✅ Additional associations for Sequelize `.include()` in getFavoriteBooks
-BookModel.hasMany(FavoriteBookModel, { foreignKey: 'bookId' });
-FavoriteBookModel.belongsTo(BookModel, { foreignKey: 'bookId' });
+setupAssociations();
 
-// ✅ Export models + sequelize
-export {
-  sequelize,
-  User,
-  BookModel as Book,
-  FavoriteBookModel as FavoriteBook
-};
+export { sequelize, User, Book, FavoriteBook };
+
+
 
 
 

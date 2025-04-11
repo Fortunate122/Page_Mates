@@ -1,5 +1,4 @@
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { FavoriteBook } from './favoriteBook.js';
 
 interface BookAttributes {
   id: number;
@@ -22,8 +21,6 @@ export class Book extends Model<BookAttributes, BookCreationAttributes> implemen
 
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
-
-  public FavoriteBooks?: FavoriteBook[]; // for eager loading
 }
 
 export function BookFactory(sequelize: Sequelize): typeof Book {
@@ -48,7 +45,6 @@ export function BookFactory(sequelize: Sequelize): typeof Book {
   );
 
   // Book.hasMany(FavoriteBook, { foreignKey: 'bookId' });
-
   return Book;
 }
 
