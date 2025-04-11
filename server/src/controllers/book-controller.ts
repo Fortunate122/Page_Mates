@@ -55,7 +55,7 @@ export const createBook: RequestHandler = async (req, res) => {
  * Delete a book by ID from the user's favorites
  */
 export const deleteBookById: RequestHandler = async (req, res) => {
-  const bookId = parseInt(req.params.id);
+  const { bookId } = req.body; // ✅ Get bookId from body
   const userId = (req.user as any)?.id;
 
   try {

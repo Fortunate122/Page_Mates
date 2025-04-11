@@ -40,20 +40,21 @@ const Dashboard = () => {
 
   const handleDelete = async (bookId: number) => {
     try {
-      const response = await fetch(`/api/books/${bookId}`, {
+      const response = await fetch(`/api/favorites/${bookId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-
+  
       if (!response.ok) throw new Error("Failed to delete book");
-
+  
       setBooks((prev) => prev.filter((b) => b.id !== bookId));
     } catch (err) {
       console.error("Error deleting book:", err);
     }
-  };
+  };  
+  
 
   return (
     <div className="container">
