@@ -50,27 +50,26 @@ const BookSearch = () => {
     };
   
     console.log("Saving payload:", payload);
-    console.log("JWT token:", token);
-
+    console.log("JWT token:", token); // ✅ Make sure this logs a real token
+  
     try {
       const response = await fetch("/api/books", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // ✅ This must not be undefined
         },
         body: JSON.stringify(payload),
       });
   
-      if (!response.ok) {
-        throw new Error("Failed to save book");
-      }
+      if (!response.ok) throw new Error("Failed to save book");
   
       alert("Book saved!");
     } catch (err) {
       console.error("Error saving book:", err);
     }
   };
+  
 
   return (
     <div className="container">

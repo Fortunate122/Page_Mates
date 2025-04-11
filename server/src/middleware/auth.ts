@@ -25,21 +25,23 @@ declare global {
  */
 export function authenticateToken(req: Request, res: Response, next: NextFunction): void {
   const authHeader = req.headers.authorization;
-  const token = authHeader?.split(' ')[1];
+  const token = authHeader?.split(" ")[1];
 
   if (!token) {
-    res.status(401).json({ message: 'Access token missing' });
+    res.status(401).json({ message: "Access token missing" });
     return;
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number, username: string };
+    console.log("Decoded token:", decoded); // ✅ Should include .id
     req.user = decoded;
     next();
   } catch (error) {
-    res.status(403).json({ message: 'Invalid token' });
+    res.status(403).json({ message: "Invalid token" });
   }
 }
+
 
 
 // export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {

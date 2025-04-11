@@ -29,6 +29,8 @@ export const createBook: RequestHandler = async (req, res) => {
   const { title, authors, description, thumbnail, googleBookId } = req.body;
   const userId = (req.user as any)?.id;
 
+  console.log("AUTH userId:", userId); // ✅ Confirm this logs a number
+
   try {
     let book = await Book.findOne({ where: { googleBookId } });
     if (!book) {
@@ -41,6 +43,7 @@ export const createBook: RequestHandler = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 export const deleteBookById: RequestHandler = async (req, res) => {
   const bookId = parseInt(req.params.id);
