@@ -32,15 +32,23 @@ export const register = async (req: Request, res: Response): Promise<void> => {
 export const login = async (req: Request, res: Response): Promise<void> => {
   const { username, password } = req.body;
 
+  console.log('Login attempt for username:', username); // 👈 log username
+
   try {
     const user = await User.findOne({ where: { username } });
 
     if (!user) {
+      console.log('❌ No user found for username:', username); // 👈 log user not found
       res.status(400).json({ message: 'Invalid username or password' });
       return;
     }
 
+    console.log('✅ User found:', user.username); // 👈 log user found
+    console.log('🔒 Stored hashed password:', user.password); // 👈 log hashed password in db
+
     const validPassword = await bcrypt.compare(password, user.password);
+
+    console.log('🔑 Password valid:', validPassword); // 👈 log whether password matched
 
     if (!validPassword) {
       res.status(400).json({ message: 'Invalid username or password' });

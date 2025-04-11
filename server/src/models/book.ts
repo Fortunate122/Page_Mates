@@ -44,6 +44,7 @@ export function BookFactory(sequelize: Sequelize): typeof Book {
     }
   );
 
+  // Book.hasMany(FavoriteBook, { foreignKey: 'bookId' });
   return Book;
 }
 
