@@ -1,5 +1,6 @@
+// server/src/models/favoriteBook.ts
 import { DataTypes, Sequelize, Model, Optional } from 'sequelize';
-import { Book } from './book.js'; // Regular import
+import type { Book } from './book.js'; // 👈 safe type-only import to avoid circular dependency
 
 interface FavoriteBookAttributes {
   id: number;
@@ -9,8 +10,10 @@ interface FavoriteBookAttributes {
 
 interface FavoriteBookCreationAttributes extends Optional<FavoriteBookAttributes, 'id'> {}
 
-export class FavoriteBook extends Model<FavoriteBookAttributes, FavoriteBookCreationAttributes>
-  implements FavoriteBookAttributes {
+export class FavoriteBook extends Model<
+  FavoriteBookAttributes,
+  FavoriteBookCreationAttributes
+> implements FavoriteBookAttributes {
   public id!: number;
   public userId!: number;
   public bookId!: number;
@@ -18,7 +21,7 @@ export class FavoriteBook extends Model<FavoriteBookAttributes, FavoriteBookCrea
   public readonly createdAt!: Date;
   public readonly updatedAt!: Date;
 
-  public Book?: Book; // Association with Book
+  public Book?: Book; // for eager loading
 }
 
 export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
@@ -40,20 +43,17 @@ export function FavoriteBookFactory(sequelize: Sequelize): typeof FavoriteBook {
     },
     {
       tableName: 'favorite_books',
+      sequelize,
       modelName: 'FavoriteBook',
       name: {
         singular: 'favoriteBook',
         plural: 'favoriteBooks',
       },
-      sequelize,
     }
   );
 
-  FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
-
   return FavoriteBook;
 }
-
 
 
 

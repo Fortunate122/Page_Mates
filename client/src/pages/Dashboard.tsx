@@ -16,11 +16,9 @@ const Dashboard = () => {
   const { token } = useAuth();
 
   useEffect(() => {
-    if (!token) return;
-
     const fetchFavorites = async () => {
       try {
-        const response = await fetch("/api/books", {
+        const response = await fetch("/api/books/favorites", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -29,7 +27,7 @@ const Dashboard = () => {
         if (!response.ok) throw new Error("Failed to fetch books");
 
         const data = await response.json();
-        setBooks(data);
+        setBooks(data); // ✅ Now it's just an array of books
       } catch (err) {
         console.error("Error fetching favorite books:", err);
       }
@@ -59,23 +57,29 @@ const Dashboard = () => {
     <div className="container">
       <h2>Your Favorite Books</h2>
       <div className="results">
-        {books.map((book) => (
-          <BookCard
-            key={book.id}
-            id={book.id.toString()}
-            title={book.title}
-            authors={book.authors.split(",")}
-            thumbnail={book.thumbnail}
-            actionLabel="Remove"
-            onAction={() => handleDelete(book.id)}
-          />
-        ))}
-      </div>
+  {books.length === 0 ? (
+    <p>No favorite books yet. Go save some from the search page!</p>
+  ) : (
+    books.map((book) => (
+      <BookCard
+        key={book.id}
+        id={book.id.toString()}
+        title={book.title}
+        authors={book.authors.split(",")}
+        thumbnail={book.thumbnail}
+        actionLabel="Remove"
+        onAction={() => handleDelete(book.id)}
+      />
+    ))
+  )}
+</div>
     </div>
   );
 };
 
 export default Dashboard;
+
+
 
 
 

@@ -19,25 +19,28 @@ const sequelize = process.env.DATABASE_URL
       }
     );
 
-
 const User = UserFactory(sequelize);
 const Book = BookFactory(sequelize);
 const FavoriteBook = FavoriteBookFactory(sequelize);
 
+// Centralized association logic
+function setupAssociations() {
+  User.belongsToMany(Book, {
+    through: FavoriteBook,
+    foreignKey: 'userId',
+    otherKey: 'bookId',
+  });
+  Book.belongsToMany(User, {
+    through: FavoriteBook,
+    foreignKey: 'bookId',
+    otherKey: 'userId',
+  });
 
-User.belongsToMany(Book, {
-  through: FavoriteBook,
-  foreignKey: 'userId',
-  otherKey: 'bookId',
-});
-Book.belongsToMany(User, {
-  through: FavoriteBook,
-  foreignKey: 'bookId',
-  otherKey: 'userId',
-});
+  Book.hasMany(FavoriteBook, { foreignKey: 'bookId', as: 'favorites' });
+  FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
+}
 
-Book.hasMany(FavoriteBook, { foreignKey: 'bookId' });
-FavoriteBook.belongsTo(Book, { foreignKey: 'bookId' });
+setupAssociations();
 
 export { sequelize, User, Book, FavoriteBook };
 
